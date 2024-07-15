@@ -14,7 +14,7 @@ class InViewNotifier extends StatefulWidget {
   final List<String> initialInViewIds;
 
   ///The widget that should be displayed in the [InViewNotifier].
-  final ScrollView child;
+  final dynamic child;
 
   ///The distance from the bottom of the list where the [onListEndReached] should be invoked.
   final double endNotificationOffset;
@@ -43,6 +43,7 @@ class InViewNotifier extends StatefulWidget {
     this.throttleDuration = const Duration(milliseconds: 200),
     required this.isInViewPortCondition,
   })  : assert(endNotificationOffset >= 0.0),
+        assert(child is ScrollView || child is SingleChildScrollView),
         scrollDirection = child.scrollDirection,
         super(key: key);
 

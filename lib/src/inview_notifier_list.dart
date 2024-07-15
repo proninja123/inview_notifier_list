@@ -56,6 +56,46 @@ class InViewNotifierList extends InViewNotifier {
   }
 }
 
+///builds a [SingleChildScrollView] and notifies when the widgets are on screen within a provided area.
+///
+///The constructor takes an [IndexedWidgetBuilder] which builds the children on demand.
+class InViewNotifierSingleChildScrollView extends InViewNotifier {
+  InViewNotifierSingleChildScrollView({
+    Key? key,
+    int? itemCount,
+    required Widget child,
+    List<String> initialInViewIds = const [],
+    double endNotificationOffset = 0.0,
+    VoidCallback? onListEndReached,
+    Duration throttleDuration = const Duration(milliseconds: 200),
+    Axis scrollDirection = Axis.vertical,
+    required IsInViewPortCondition isInViewPortCondition,
+    ScrollController? controller,
+    EdgeInsets? padding,
+    ScrollPhysics? physics,
+    bool reverse = false,
+    bool? primary,
+    bool shrinkWrap = false,
+    bool addAutomaticKeepAlives = true,
+  })  : assert(endNotificationOffset >= 0.0),
+        super(
+        key: key,
+        initialInViewIds: initialInViewIds,
+        endNotificationOffset: endNotificationOffset,
+        onListEndReached: onListEndReached,
+        throttleDuration: throttleDuration,
+        isInViewPortCondition: isInViewPortCondition,
+        child: child,
+      );
+
+  static InViewState? of(BuildContext context) {
+    final InheritedInViewWidget widget = context
+        .getElementForInheritedWidgetOfExactType<InheritedInViewWidget>()!
+        .widget as InheritedInViewWidget;
+    return widget.inViewState;
+  }
+}
+
 ///builds a [CustomScrollView] and notifies when the widgets are on screen within a provided area.
 ///
 ///A [CustomScrollView] lets you supply [slivers] directly to create various scrolling effects,
